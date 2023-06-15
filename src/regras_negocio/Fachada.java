@@ -69,8 +69,9 @@ public class Fachada {
     }
 
     public static void criarAdministrador(String nome, String senha) throws  Exception{
-        //cria um administrador no repositório, caso
-        //inexista no repositório
+        Participante p = repositorio.localizarParticipante(nome);
+        Individual individuo = new Individual(nome,senha,true);
+        repositorio.adicionar(individuo);
     }
 
 
@@ -78,7 +79,6 @@ public class Fachada {
         Participante p = repositorio.localizarParticipante(nome);
         Grupo grupo= new Grupo(nome);
         repositorio.adicionar(grupo);
-        //FALTOU AS EXCEPTIONS
         //localizar nome no repositorio
         //criar o grupo
         // cria um grupo no repositório, caso inexista no repositório
@@ -88,7 +88,6 @@ public class Fachada {
         Individual ind= repositorio.localizarIndividual(nomeindividuo);
         Grupo grupo = repositorio.localizarGrupo(nomegrupo);
         grupo.adicionar(ind);
-        //FALTOU AS EXCEPTION
         //localizar nomeindividuo no repositorio
         //localizar nomegrupo no repositorio
         //verificar se individuo nao esta no grupo
@@ -98,13 +97,12 @@ public class Fachada {
     public static void removerGrupo(String nomeindividuo, String nomegrupo) throws  Exception{
         Grupo grupo = repositorio.localizarGrupo(nomegrupo);
         grupo.remover(nomeindividuo);
-        //FALTOU AS EXCEPTIONS
+
         //localizar nomeindividuo no repositorio
         //localizar nomegrupo no repositorio
-        //verificar se individuo ja esta no grupo
+        //verificar se individuo ja esta no grupo FALTANDO ESSA EXCEPTION
         //remover individuo com o grupo e vice-versa
     }
-
 
     public static void criarMensagem(String nomeemitente, String nomedestinatario, String texto) throws Exception{
         if(texto.isEmpty())
