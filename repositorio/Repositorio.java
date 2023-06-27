@@ -17,23 +17,11 @@ public class Repositorio {
     TreeMap <Integer,Mensagem> mensagens=new TreeMap<Integer,Mensagem>();
 
 
-
-    public  TreeMap<String,Participante> getparticipantes(){
-        return participantes;
-
-    }
-
-
-    public  TreeMap<Integer,Mensagem> getmensagens(){
-        return mensagens;
-
-    }
-
     public void adicionarParticipante(Participante part){
         participantes.put(part.getNome(), part);
     }
 
-    public void removeParticipante(Participante part){
+    public void removerParticipante(Participante part){
         participantes.remove(part.getNome());
     }
 
@@ -61,7 +49,6 @@ public class Repositorio {
     }
 
 
-
     public  Grupo localizarGrupo(String nome) {
         for(Participante p : participantes.values()) {
             if(p instanceof Grupo grp && p.getNome().equals(nome)) {
@@ -71,7 +58,6 @@ public class Repositorio {
         }
         return null;
     }
-
 
 
     public ArrayList<Grupo> getGrupos(){
