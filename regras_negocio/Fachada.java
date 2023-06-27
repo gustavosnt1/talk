@@ -289,9 +289,9 @@ public class Fachada {
             throw new Exception("ausentes - individuo não é administrador:" + nomeadmin);
 
         ArrayList<String> ausentes = new ArrayList<>();
-        for (Participante p : repositorio.getParticipantes()) {
-            if(p.getEnviadas().isEmpty())
-                ausentes.add(p.getNome());
+        for (Participante part : repositorio.getParticipantes()) {
+            if(part.getEnviadas().isEmpty())
+                ausentes.add(part.getNome());
         }
         return ausentes;
     }
