@@ -142,6 +142,16 @@ public class Fachada {
         repositorio.adicionarMensagem(msg);
         //caso destinatario seja tipo Grupo então criar copias da mensagem, tendo o grupo como emitente e cada membro do grupo como
         //destinatario, usando mesmo id e texto
+        if(destinatario instanceof Grupo) {
+            Grupo g = (Grupo) destinatario;
+            for(Individual ind : g.getIndividuos()) {
+                if(!ind.equals(emitente)) {
+                    Mensagem copia = new Mensagem(id, texto, g, ind, msg.getDatahora());
+                    g.adicionarEnviadas(copia);
+                    ind.adicionarRecebidas(copia);
+                }
+            }
+        }
     }
 
 
@@ -268,12 +278,12 @@ public class Fachada {
         if(termo.isEmpty())
             return repositorio.getMensagens();
 
-        ArrayList<Mensagem> mensagensEspionadas = new ArrayList<>();
-        for(Mensagem m : repositorio.getMensagens()) {
-            if(m.getTexto().contains(termo))
-                mensagensEspionadas.add(m);
+        ArrayList<Mensagem> espionarMsgs = new ArrayList<>();
+        for(Mensagem msg : repositorio.getMensagens()) {
+            if(msg.getTexto().contains(termo))
+                espionarMsgs.add(msg);
         }
-        return mensagensEspionadas;
+        return espionarMsgs;
 
     }
 
