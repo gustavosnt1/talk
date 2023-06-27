@@ -25,12 +25,13 @@ public class Grupo extends Participante {
 
 
     @Override
-    public String toString(){
-        String string = super.toString() + "individuos do grupo:";
-        for (Individual ind : individuos){
-            string += "-->" +ind.getNome();
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(super.toString()).append("\nindividuos do grupo:");
+        for (Individual ind : individuos) {
+            builder.append("\n-->").append(ind.getNome());
         }
-        return string;
+        return builder.toString();
     }
 
 }

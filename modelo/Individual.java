@@ -43,12 +43,13 @@ public class Individual extends Participante {
     }
 
     @Override
-    public String toString(){
-        String string = super.toString() + "Grupos:";
-        for(Grupo grp : grupos){
-            string += "-->" + grp.getNome();
+    public String toString() {
+        StringBuilder builder = new StringBuilder(super.toString());
+        builder.append("\ngrupos:");
+        for (Grupo grp : grupos) {
+            builder.append("\n-->").append(grp.getNome());
         }
-        return string;
+        return builder.toString();
     }
 
 }

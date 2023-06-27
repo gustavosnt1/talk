@@ -100,7 +100,7 @@ public class Fachada {
 
 
 
-    public static void removerGrupo(String nomegrupo,String nomeindividuo) throws Exception {
+    public static void removerGrupo(String nomeindividuo,String nomegrupo) throws Exception {
 
         Individual ind = repositorio.localizarIndividual(nomeindividuo);
         if(ind == null)
@@ -110,10 +110,11 @@ public class Fachada {
         if(grp == null)
             throw new Exception("remover Grupo - grupo não existe:" + nomegrupo);
 
-        ArrayList<Individual> individuo = grp.getIndividuos();
+        if (!grp.getIndividuos().contains(ind))
+            throw new Exception("remover Grupo - indivíduo não está no grupo:");
+
         grp.removerIndividual(ind);
         ind.removerGrupo(grp);
-        //Falta verificacao se o individuo nao esta no grupo
 
     }
 
@@ -140,8 +141,18 @@ public class Fachada {
         emitente.adicionarEnviadas(msg);
         destinatario.adicionarRecebidas(msg);
         repositorio.adicionarMensagem(msg);
-        //caso destinatario seja tipo Grupo então criar copias da mensagem, tendo o grupo como emitente e cada membro do grupo como
-        //destinatario, usando mesmo id e texto
+
+        if(destinatario instanceof Grupo) {
+            Grupo grp = (Grupo) destinatario;
+            for (Individual ind : grp.getIndividuos()) {
+                if (!ind.equals(emitente)) {
+                    Mensagem copia = new Mensagem(id, texto, grp, ind, msg.getDatahora() );
+                    grp.adicionarEnviadas(copia);
+                    ind.adicionarRecebidas(copia);
+
+                }
+            }
+        }
     }
 
 

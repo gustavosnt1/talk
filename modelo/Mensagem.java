@@ -49,19 +49,17 @@ public class Mensagem {
 
     @Override
     public String toString() {
-        String string = id + ": " + "emitente=" + emitente.getNome() + ", destinatario=" + destinatario.getNome() +
-                ", datahora=" + datahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + ", texto=" + texto;
+        StringBuilder builder = new StringBuilder();
+        builder.append(id)
+                .append(": emitente=")
+                .append(emitente.getNome())
+                .append(", destinatario=")
+                .append(destinatario.getNome())
+                .append(", texto=")
+                .append(texto)
+                .append(", datahora=")
+                .append(datahora.format(DateTimeFormatter.ofPattern("ddMMyyyy HH:mm:ss")));
 
-        return string;
+        return builder.toString();
     }
-
-
-
-
-
-
-
-
-
-
 }

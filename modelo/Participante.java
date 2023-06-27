@@ -62,17 +62,19 @@ public class Participante {
     }
 
     @Override
-    public String toString(){
-        String string = "nome" + nome + "mensagens enviadas: ";
-        for(Mensagem msg : enviadas) {
-            string += "-->" + msg;
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("nome=").append(nome).append("\nmensagens enviadas: ");
+        for (Mensagem msg : enviadas) {
+            builder.append("\n-->").append(msg);
         }
 
-        string += "mensagens recebidas:";
-        for(Mensagem msg : recebidas){
-            string += "-->" + msg;
+        builder.append("\nmensagens recebidas:");
+        for (Mensagem msg : recebidas) {
+            builder.append("\n-->").append(msg);
         }
-        return string;
+
+        return builder.toString();
     }
 
 }
