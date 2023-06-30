@@ -119,37 +119,39 @@ public class Fachada {
     }
 
 
-    public static void criarMensagem(String nomeind,String nomedest,String texto) throws Exception  {
+    public static void criarMensagem(String nomeind, String nomedest, String texto) throws Exception {
 
-
-        if(texto.isEmpty())
+        if (texto.isEmpty())
             throw new Exception("criar mensagem - texto vazio:");
 
         Individual emitente = repositorio.localizarIndividual(nomeind);
-        if(emitente == null)
+        if (emitente == null)
             throw new Exception("criar mensagem - emitente nao existe:" + nomeind);
 
         Participante destinatario = repositorio.localizarParticipante(nomedest);
-        if(destinatario == null)
+        if (destinatario == null)
             throw new Exception("criar mensagem - destinatario nao existe:" + nomedest);
 
-        if(destinatario instanceof Grupo g && repositorio.localizarGrupo(g.getNome())==null)
+
+        if (destinatario instanceof Grupo g && repositorio.localizarGrupo(g.getNome()) == null)
             throw new Exception("criar mensagem - grupo nao permitido:" + nomedest);
 
         int id = repositorio.gerarID();
-        Mensagem msg = new Mensagem(id,texto,emitente, destinatario, LocalDateTime.now());
+        Mensagem msg = new Mensagem(id, texto, emitente, destinatario, LocalDateTime.now());
         emitente.adicionarEnviadas(msg);
         destinatario.adicionarRecebidas(msg);
         repositorio.adicionarMensagem(msg);
 
-        if(destinatario instanceof Grupo) {
+        if (destinatario instanceof Grupo) {
             Grupo grp = (Grupo) destinatario;
             for (Individual ind : grp.getIndividuos()) {
                 if (!ind.equals(emitente)) {
-                    Mensagem copia = new Mensagem(id, texto, grp, ind, msg.getDatahora() );
+                    int idCopia = id;
+                    String textoCopia = emitente.getNome() + "/" + texto;
+                    Mensagem copia = new Mensagem(idCopia, textoCopia, emitente, ind, msg.getDatahora());
                     grp.adicionarEnviadas(copia);
                     ind.adicionarRecebidas(copia);
-
+                    repositorio.adicionarMensagem(copia);
                 }
             }
         }
@@ -206,26 +208,25 @@ public class Fachada {
         if(emitente == null)
             throw new Exception("apagar mensagem - nome nao existe:" + nomeindividuo);
 
-        Mensagem msg = emitente.localizarEnviada(id);
-        if(msg == null)
+        Mensagem m = emitente.localizarEnviada(id);
+        if(m == null)
             throw new Exception("apagar mensagem - mensagem nao pertence a este individuo:" + id);
 
-        emitente.removerEnviadas(msg);
-        Participante destinatario = msg.getDestinatario();
-        destinatario.removerRecebidas(msg);
-        repositorio.removerMensagem(msg);
+        emitente.removerEnviadas(m);
+        Participante destinatario = m.getDestinatario();
+        destinatario.removerRecebidas(m);
+        repositorio.removerMensagem(m);
 
         if(destinatario instanceof Grupo g) {
             ArrayList<Mensagem> lista = destinatario.getEnviadas();
-            lista.removeIf(new Predicate<Mensagem>() {
+            lista.removeIf(new Predicate<>() {
                 @Override
                 public boolean test(Mensagem t) {
-                    if(t.getId() == msg.getId()) {
+                    if (t.getId() == m.getId()) {
                         t.getDestinatario().removerRecebidas(t);
-                        repositorio.removerMensagem(msg);
-                        return true;		//apaga mensagem da lista
-                    }
-                    else
+                        repositorio.removerMensagem(t);
+                        return true;
+                    } else
                         return false;
                 }
 
@@ -292,9 +293,6 @@ public class Fachada {
 
     public static ArrayList<String> ausentes(String nomeadmin) throws Exception {
         Individual individuo = repositorio.localizarIndividual(nomeadmin);
-        if(individuo == null)
-            throw new Exception("ausentes - individuo não existe:" + nomeadmin);
-
 
         if(!individuo.getAdministrador())
             throw new Exception("ausentes - individuo não é administrador:" + nomeadmin);

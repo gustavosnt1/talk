@@ -13,8 +13,8 @@ public class Mensagem {
     private Participante destinatario;
     private LocalDateTime datahora;
 
-    public Mensagem( int id,String texto, Participante emitente, Participante destinatario, LocalDateTime datahora) {
-        this.id=id;
+    public Mensagem(int id,String texto, Participante emitente, Participante destinatario, LocalDateTime datahora) {
+        this.id = id;
         this.texto=texto;
         this.emitente=emitente;
         this.destinatario=destinatario;
@@ -22,11 +22,13 @@ public class Mensagem {
     }
 
 
-
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTexto() {
         return texto;
     }

@@ -14,7 +14,7 @@ public class Repositorio {
 
 
     TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
-    TreeMap <Integer,Mensagem> mensagens=new TreeMap<Integer,Mensagem>();
+    ArrayList<Mensagem> mensagens = new ArrayList<>();
 
 
     public void adicionarParticipante(Participante part){
@@ -25,12 +25,31 @@ public class Repositorio {
         participantes.remove(part.getNome());
     }
 
-    public void adicionarMensagem(Mensagem msg){
-        mensagens.put(msg.getId(), msg);
+
+
+    public int gerarID() {
+        if (mensagens.isEmpty()) {
+            return 1;
+        } else {
+            int maiorId = Integer.MIN_VALUE;
+            for (Mensagem mensagem : mensagens) {
+                if (mensagem.getId() > maiorId) {
+                    maiorId = mensagem.getId();
+                }
+            }
+            return maiorId + 1;
+        }
     }
 
+    public void adicionarMensagem(Mensagem msg) {
+        int novoId = gerarID();
+        msg.setId(novoId);
+        mensagens.add(msg);
+    }
+
+
     public void removerMensagem(Mensagem msg){
-        mensagens.remove(msg.getId());
+        mensagens.remove(msg);
     }
 
     public Participante localizarParticipante(String nome) {
@@ -38,10 +57,8 @@ public class Repositorio {
     }
 
     public  Individual localizarIndividual(String nome) {
-        for(Participante p : participantes.values())
-        {
-            if(p instanceof Individual ind &&  p.getNome().equals(nome) )
-            {
+        for(Participante p : participantes.values()) {
+            if(p instanceof Individual ind &&  p.getNome().equals(nome) ) {
                 return ind;
             }
         }
@@ -54,21 +71,17 @@ public class Repositorio {
             if(p instanceof Grupo grp && p.getNome().equals(nome)) {
                 return grp;
             }
-
         }
         return null;
     }
 
 
     public ArrayList<Grupo> getGrupos(){
-
         ArrayList<Grupo> grupos= new ArrayList<>();
-
         for(Participante p : participantes.values()) {
             if (p instanceof Grupo g) {
                 grupos.add(g);
             }
-
         }
         return grupos;
     }
@@ -93,21 +106,17 @@ public class Repositorio {
     }
 
     public ArrayList<Mensagem> getMensagens(){
-        ArrayList<Mensagem> msg = new ArrayList<>();
-        for(Mensagem mensagem : mensagens.values()){
-            msg.add(mensagem);
-        }
-        return msg;
+            return mensagens;
     }
 
-    public int gerarID() {
+    /*public int gerarID() {
         if (mensagens.isEmpty()) {
             return 1;
         } else {
             int ultimoId = mensagens.lastKey();
             return ultimoId + 1;
         }
-    }
+    }*/
 
     /*public void carregarObjetos()  	{
         // carregar para o repositorio os objetos dos arquivos csv
