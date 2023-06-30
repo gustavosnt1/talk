@@ -1,9 +1,3 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Pesist~encia de Objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************//*
-
 
 package appswing;
 
@@ -47,10 +41,7 @@ public class TelaConversa {
 	private JComboBox<String> comboBox;
 	private JLabel label_1;
 
-	*/
-/**
-	 * Launch the application.
-	 *//*
+
 
 	// public static void main(String[] args) {
 	// EventQueue.invokeLater(new Runnable() {
@@ -65,19 +56,14 @@ public class TelaConversa {
 	// });
 	// }
 
-	*/
-/**
-	 * Create the application.
-	 *//*
+
+
 
 	public TelaConversa() {
 		initialize();
 	}
 
-	*/
-/**
-	 * Initialize the contents of the frame.
-	 *//*
+
 
 	private void initialize() {
 		frame = new JFrame();
@@ -226,11 +212,11 @@ public class TelaConversa {
 			label.setText("");
 			for (Mensagem m : lista) {
 				model.addRow(new Object[]{
-						m.getId(), 
+						m.getId(),
 						m.getDatahora(),
-						m.getEmitente().getNome(), 
+						m.getEmitente().getNome(),
 						m.getDestinatario().getNome(),
-						m.getTexto() 
+						m.getTexto()
 						});
 				}
 			table.setModel(model);
@@ -246,4 +232,3 @@ public class TelaConversa {
 		}
 	}
 }
-*/

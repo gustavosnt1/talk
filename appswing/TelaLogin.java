@@ -1,11 +1,5 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Pesist~encia de Objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************//*
-
-
 package appswing;
+
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -30,10 +24,8 @@ public class TelaLogin {
 	private JLabel lblSenha;
 	private JButton btnEntrar;
 
-	*/
-/**
-	 * Launch the application.
-	 *//*
+
+
 
 //		public static void main(String[] args) {
 //			EventQueue.invokeLater(new Runnable() {
@@ -48,19 +40,14 @@ public class TelaLogin {
 //			});
 //		}
 
-	*/
-/**
-	 * Create the application.
-	 *//*
+
 
 	public TelaLogin() {
 		initialize();
 	}
 
-	*/
-/**
-	 * Initialize the contents of the frame.
-	 *//*
+
+
 
 	private void initialize() {
 		frame = new JDialog();
@@ -127,4 +114,3 @@ public class TelaLogin {
 	}
 
 }
-*/

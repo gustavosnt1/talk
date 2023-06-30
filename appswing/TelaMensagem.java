@@ -1,8 +1,3 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Pesist~encia de Objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************//*
 
 
 package appswing;
@@ -45,10 +40,7 @@ public class TelaMensagem {
 	private JRadioButton radioButton;
 	private JRadioButton radioButton_1;
 
-	*/
-/**
-	 * Launch the application.
-	 *//*
+
 
 	// public static void main(String[] args) {
 	// EventQueue.invokeLater(new Runnable() {
@@ -63,19 +55,12 @@ public class TelaMensagem {
 	// });
 	// }
 
-	*/
-/**
-	 * Create the application.
-	 *//*
+
 
 	public TelaMensagem() {
 		initialize();
 	}
 
-	*/
-/**
-	 * Initialize the contents of the frame.
-	 *//*
 
 	private void initialize() {
 		frame = new JFrame();
@@ -193,4 +178,3 @@ public class TelaMensagem {
 		frame.dispose();
 	}
 }
-*/

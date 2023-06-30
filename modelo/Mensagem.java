@@ -26,9 +26,6 @@ public class Mensagem {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
     public String getTexto() {
         return texto;
     }

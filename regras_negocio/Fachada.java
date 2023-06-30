@@ -3,6 +3,7 @@ package regras_negocio;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import modelo.Grupo;
@@ -33,22 +34,24 @@ public class Fachada {
         }
 
 
-
-
-
-    public static boolean validarIndividuo(String nomeindividuo,String senha) {
-
-        if(repositorio.localizarIndividual(nomeindividuo)!=null)
-        {
-            return true;
+    public static Individual validarIndividuo(String nomeindividuo,String senha) {
+        Individual individuo = localizarIndividual(nomeindividuo);
+        if(individuo == null) {
+            return null;
+        }else{
+            if(individuo.getSenha().equals(senha)){
+                return individuo;
+            }else{
+                return null;
+            }
         }
-
-        return false;
-
 
     }
 
+    public static Individual localizarIndividual(String nomeindividuo) {
 
+        return repositorio.localizarIndividual(nomeindividuo);
+    }
 
     public static void criarAdministrador(String nome,String senha) throws Exception {
 
@@ -146,9 +149,8 @@ public class Fachada {
             Grupo grp = (Grupo) destinatario;
             for (Individual ind : grp.getIndividuos()) {
                 if (!ind.equals(emitente)) {
-                    int idCopia = id;
                     String textoCopia = emitente.getNome() + "/" + texto;
-                    Mensagem copia = new Mensagem(idCopia, textoCopia, emitente, ind, msg.getDatahora());
+                    Mensagem copia = new Mensagem(id, textoCopia, emitente, ind, msg.getDatahora());
                     grp.adicionarEnviadas(copia);
                     ind.adicionarRecebidas(copia);
                     repositorio.adicionarMensagem(copia);
@@ -160,46 +162,47 @@ public class Fachada {
 
 
 
-    public static ArrayList<Mensagem> obterConversa(String nomeindividuo, String nomedestinatario) throws Exception{
-
-
-        Individual emitente = repositorio.localizarIndividual(nomeindividuo);
+    public static ArrayList<Mensagem> obterConversa(String nomeemitente, String nomedestinatario) throws Exception{
+        //localizar emitente no repositorio
+        Individual emitente = repositorio.localizarIndividual(nomeemitente);
         if(emitente == null)
-            throw new Exception("Uusário emitente nao encontrado");
+            throw new Exception("obter conversa - emitente nao existe:" + nomeemitente);
 
+        //localizar destinatario no repositorio
         Participante destinatario = repositorio.localizarParticipante(nomedestinatario);
         if(destinatario == null)
-            throw new Exception("Uusário destinitário nao encontrado");
+            throw new Exception("obter conversa - destinatario nao existe:" + nomedestinatario);
 
 
-        ArrayList<Mensagem> enviadas= emitente.getEnviadas();
-        ArrayList<Mensagem> recebidas= emitente.getRecebidas();
-        ArrayList<Mensagem> conversa= new ArrayList<>();
+        ArrayList<Mensagem> lista1 = emitente.getEnviadas();
 
+        ArrayList<Mensagem> lista2 = destinatario.getEnviadas();
 
-        for(Mensagem m : enviadas) {
-            if(m.getDestinatario().getNome()==nomedestinatario) {
+        ArrayList<Mensagem> conversa = new ArrayList<>();
+
+        for(Mensagem m : lista1){
+            if(m.getDestinatario().equals(destinatario)){
                 conversa.add(m);
             }
         }
 
-        for(Mensagem m : recebidas) {
-            if(m.getEmitente().getNome()==nomedestinatario) {
+        for(Mensagem m : lista2){
+            if(m.getDestinatario().equals(emitente)){
                 conversa.add(m);
             }
         }
 
-
+        //ordenar a lista conversa pelo id das mensagens
         conversa.sort(new Comparator<Mensagem>() {
-            public int compare(Mensagem m1,Mensagem m2) {
+            @Override
+            public int compare(Mensagem m1, Mensagem m2) {
                 return Integer.compare(m1.getId(), m2.getId());
             }
         });
+
+        //retornar a lista conversa
         return conversa;
     }
-
-
-
 
 
 

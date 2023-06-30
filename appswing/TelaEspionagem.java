@@ -1,8 +1,3 @@
-/**********************************
- * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Pesist~encia de Objetos
- * Prof. Fausto Maranh�o Ayres
- **********************************//*
 
 
 package appswing;
@@ -44,10 +39,8 @@ public class TelaEspionagem {
 	private JLabel label_1;
 	private JButton button_1;
 
-	*/
-/**
-	 * Launch the application.
-	 *//*
+
+
 
 	// public static void main(String[] args) {
 	// EventQueue.invokeLater(new Runnable() {
@@ -62,19 +55,14 @@ public class TelaEspionagem {
 	// });
 	// }
 
-	*/
-/**
-	 * Create the application.
-	 *//*
+
+
 
 	public TelaEspionagem() {
 		initialize();
 	}
 
-	*/
-/**
-	 * Initialize the contents of the frame.
-	 *//*
+
 
 	private void initialize() {
 		frame = new JFrame();
@@ -196,4 +184,3 @@ public class TelaEspionagem {
 		frame.dispose();
 	}
 }
-*/

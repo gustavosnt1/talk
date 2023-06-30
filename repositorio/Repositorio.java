@@ -42,8 +42,6 @@ public class Repositorio {
     }
 
     public void adicionarMensagem(Mensagem msg) {
-        int novoId = gerarID();
-        msg.setId(novoId);
         mensagens.add(msg);
     }
 
