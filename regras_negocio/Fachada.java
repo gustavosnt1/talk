@@ -31,6 +31,7 @@ public class Fachada {
 
             Individual individuo = new Individual(nome,senha, false);
             repositorio.adicionarParticipante(individuo);
+            repositorio.salvarObjetos();
         }
 
 
@@ -66,6 +67,7 @@ public class Fachada {
 
         Individual individuo = new Individual(nome, senha, true);
         repositorio.adicionarParticipante(individuo);
+        repositorio.salvarObjetos();
 
     }
 
@@ -82,6 +84,7 @@ public class Fachada {
 
         Grupo grp = new Grupo(nome);
         repositorio.adicionarParticipante(grp);
+        repositorio.salvarObjetos();
     }
 
 
@@ -98,6 +101,7 @@ public class Fachada {
         ArrayList<Individual> individuo = grp.getIndividuos();
         grp.adicionarIndividual(ind);
         ind.adicionarGrupo(grp);
+        repositorio.salvarObjetos();
         //Falta verificaçao se o individuo ja esta no grupo
     }
 
@@ -118,6 +122,7 @@ public class Fachada {
 
         grp.removerIndividual(ind);
         ind.removerGrupo(grp);
+        repositorio.salvarObjetos();
 
     }
 
@@ -157,6 +162,7 @@ public class Fachada {
                 }
             }
         }
+        repositorio.salvarObjetos();
     }
 
 
@@ -236,6 +242,7 @@ public class Fachada {
             });
 
         }
+        repositorio.salvarObjetos();
     }
 
 
@@ -308,4 +315,42 @@ public class Fachada {
         return ausentes;
     }
 
+    /*public static void gravarDados() {
+        repositorio.salvarObjetos();
+    }
+
+    public static void lerDados() {
+        repositorio.carregarObjetos();
+
+        for(Grupo g : repositorio.getGrupos()) {           //Para cada grupo no repositorio
+            for (Individual ind : g.getIndividuos()) {     //Para cada indivíduo na lista de participantes de cada grupo
+                if(!ind.getGrupos().contains(g))           //Se o grupo ainda não se encontra na lista de grupos que aquele usuário está inserido
+                    ind.adicionarGrupo(g);                       //Adiciona o grupo a lista
+            }
+        }
+
+        for (Mensagem m : repositorio.getMensagens()) {            //Para cada mensagem no repositorio
+            Individual emitente = (Individual) m.getEmitente();    //Pega o emitente
+            Participante destinatario = m.getDestinatario();       //Pega o destinatário
+
+            if(!emitente.getEnviadas().contains(m))          //Se a mensagem ainda não está na lista de mensagens enviadas do emitente
+                emitente.adicionarEnviadas(m);                      //Adiciona
+
+            if(!destinatario.getRecebidas().contains(m))     //Se a mensagem ainda não está na lista de mensagens recebidas do destinatário
+                destinatario.adicionarRecebidas(m);                 //Adiciona
+
+            if(destinatario instanceof Grupo) {              //Se o destinatário for um grupo, faz o mesmo processo descrito na linha 178
+                Grupo g = (Grupo) destinatario;
+                for(Individual ind : g.getIndividuos()) {
+                    if(!ind.equals(emitente)) {
+                        Mensagem copia = new Mensagem(m.getId(), m.getTexto(), g, ind, m.getDatahora());
+                        g.adicionarEnviadas(copia);
+                        ind.adicionarRecebidas(copia);
+                    }
+                }
+            }
+        }
+    }*/
+
 }
+

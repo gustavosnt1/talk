@@ -64,7 +64,7 @@ public class TelaPrincipal {
 		label = new JLabel("New label");
 		label.setBounds(0, 0, 471, 251);
 		frame.getContentPane().add(label);
-		ImageIcon imagem = new ImageIcon(getClass().getResource("/imagens/imagem.jpg"));
+		ImageIcon imagem = new ImageIcon(getClass().getResource("/imagens/imagem.png"));
 		imagem = new ImageIcon(imagem.getImage().getScaledInstance(label.getWidth(),label.getHeight(), Image.SCALE_DEFAULT));
 		label.setIcon(imagem);
 		

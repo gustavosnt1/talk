@@ -16,6 +16,10 @@ public class Repositorio {
     TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
     ArrayList<Mensagem> mensagens = new ArrayList<>();
 
+    public Repositorio(){
+        this.carregarObjetos();
+    }
+
 
     public void adicionarParticipante(Participante part){
         participantes.put(part.getNome(), part);
@@ -107,16 +111,7 @@ public class Repositorio {
             return mensagens;
     }
 
-    /*public int gerarID() {
-        if (mensagens.isEmpty()) {
-            return 1;
-        } else {
-            int ultimoId = mensagens.lastKey();
-            return ultimoId + 1;
-        }
-    }*/
-
-    /*public void carregarObjetos()  	{
+    public void carregarObjetos()  	{
         // carregar para o repositorio os objetos dos arquivos csv
         try {
             //caso os arquivos nao existam, serao criados vazios
@@ -150,7 +145,7 @@ public class Repositorio {
                 senha = partes[1];
                 administrador = partes[2];
                 Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
-                this.adicionar(ind);
+                participantes.put(ind.getNome(), ind);
             }
             arquivo1.close();
         }
@@ -173,9 +168,10 @@ public class Repositorio {
                 if(partes.length>1)
                     for(int i=1; i< partes.length; i++) {
                         individuo = this.localizarIndividual(partes[i]);
-                        grupo.adicionar(individuo);
+                        grupo.adicionarIndividual(individuo);
+                        individuo.adicionarGrupo(grupo);
                     }
-                this.adicionar(grupo);
+                participantes.put(grupo.getNome(), grupo);
             }
             arquivo2.close();
         }
@@ -185,7 +181,9 @@ public class Repositorio {
 
 
         try	{
-            String id, nomeemitente, nomedestinatario,texto;
+            String nomeemitente, nomedestinatario,texto;
+            int id;
+            LocalDateTime datahora;
             Mensagem m;
             Participante emitente,destinatario;
             File f = new File( new File(".\\mensagens.csv").getCanonicalPath() )  ;
@@ -194,44 +192,37 @@ public class Repositorio {
                 linha = arquivo3.nextLine().trim();
                 partes = linha.split(";");
                 //System.out.println(Arrays.toString(partes));
-                id = partes[0];
-                nomeemitente = partes[1];
-                nomedestinatario = partes[2];
-                texto = partes[3];
+                id = Integer.parseInt(partes[0]);
+                texto = partes[1];
+                nomeemitente = partes[2];
+                nomedestinatario = partes[3];
+                datahora = LocalDateTime.parse(partes[4], DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
                 emitente = this.localizarParticipante(nomeemitente);
                 destinatario = this.localizarParticipante(nomedestinatario);
-                m = new Mensagem(Integer.parseInt(id),texto,emitente,destinatario);
-                this.adicionar(m);
+                m = new Mensagem(id,texto, emitente, destinatario, datahora);
+                this.adicionarMensagem(m);
+                emitente.adicionarEnviadas(m);
+                destinatario.adicionarRecebidas(m);
             }
             arquivo3.close();
         }
         catch(Exception ex)		{
             throw new RuntimeException("leitura arquivo de mensagens:"+ex.getMessage());
         }
-
     }
-
-
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return 0;
-    }
-
-
 
 
     public void	salvarObjetos()  {
         //gravar nos arquivos csv os objetos que estão no repositório
-
         try	{
             File f = new File( new File(".\\mensagens.csv").getCanonicalPath())  ;
             FileWriter arquivo1 = new FileWriter(f);
-            for(Mensagem m : mensagens.values()) 	{      //mensagens.values() e nao mensagens!!!!
+            for(Mensagem m : mensagens) 	{
                 arquivo1.write(	m.getId()+";"+
+                        m.getTexto()+";"+
                         m.getEmitente().getNome()+";"+
                         m.getDestinatario().getNome()+";"+
-                        m.getTexto()+"\n");
+                        m.getDatahora().format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))+"\n");
             }
             arquivo1.close();
         }
@@ -256,21 +247,17 @@ public class Repositorio {
             FileWriter arquivo3 = new FileWriter(f) ;
             for(Grupo g : this.getGrupos()) {
                 String texto="";
-                for(Individual ind : g.getIndividuos()) {
+                for(Individual ind : g.getIndividuos())
                     texto += ";" + ind.getNome();
-                    arquivo3.write(g.getNome() + texto + "\n");
-                }
-                arquivo3.close();
+                arquivo3.write(g.getNome() + texto + "\n");
             }
+            arquivo3.close();
         }
         catch (Exception e) {
             throw new RuntimeException("problema na criação do arquivo  grupos "+e.getMessage());
         }
-
-    }*/
-
-
-
-
+    }
 
 }
+
+

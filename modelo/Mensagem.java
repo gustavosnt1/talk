@@ -57,7 +57,7 @@ public class Mensagem {
                 .append(", texto=")
                 .append(texto)
                 .append(", datahora=")
-                .append(datahora.format(DateTimeFormatter.ofPattern("ddMMyyyy HH:mm:ss")));
+                .append(datahora.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")));
 
         return builder.toString();
     }
