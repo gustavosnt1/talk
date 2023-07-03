@@ -98,11 +98,16 @@ public class Fachada {
         if(grp == null)
             throw new Exception("inserir Grupo - grupo não existe:" + nomegrupo);
 
+
         ArrayList<Individual> individuo = grp.getIndividuos();
+        for(Individual i : individuo){
+            if((i.getNome()).equals(nomeindividuo))
+                throw new Exception("inserir - individuo já está no grupo");
+        }
         grp.adicionarIndividual(ind);
         ind.adicionarGrupo(grp);
         repositorio.salvarObjetos();
-        //Falta verificaçao se o individuo ja esta no grupo
+
     }
 
 
@@ -155,7 +160,7 @@ public class Fachada {
             for (Individual ind : grp.getIndividuos()) {
                 if (!ind.equals(emitente)) {
                     String textoCopia = emitente.getNome() + "/" + texto;
-                    Mensagem copia = new Mensagem(id, textoCopia, emitente, ind, msg.getDatahora());
+                    Mensagem copia = new Mensagem(id, textoCopia, grp, ind, msg.getDatahora());
                     grp.adicionarEnviadas(copia);
                     ind.adicionarRecebidas(copia);
                     repositorio.adicionarMensagem(copia);
@@ -314,7 +319,7 @@ public class Fachada {
         }
         return ausentes;
     }
-    
+
 
 }
 

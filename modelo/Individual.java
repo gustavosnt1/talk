@@ -22,10 +22,6 @@ public class Individual extends Participante {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public boolean getAdministrador() {
         return administrador;
     }
