@@ -103,7 +103,7 @@ public class TelaParticipante {
 			}
 		});
 		frame.setTitle("Participantes");
-		frame.setBounds(100, 100, 538, 323);
+		frame.setBounds(100, 100, 629, 433);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -128,7 +128,7 @@ public class TelaParticipante {
 
 		label = new JLabel("");
 		label.setForeground(Color.RED);
-		label.setBounds(-115, 259, 373, 268);
+		label.setBounds(44, 128, 373, 268);
 		frame.getContentPane().add(label);
 
 		lblEmail = new JLabel("Nome");

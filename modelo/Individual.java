@@ -16,8 +16,6 @@ public class Individual extends Participante {
         //
     }
 
-
-
     public String getSenha() {
         return senha;
     }
