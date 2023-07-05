@@ -22,9 +22,9 @@ public class Teste1 {
 
     public Teste1() {
 
-        /**
+   /*     *
          * PARTICIPANTE INDIVIDUAL
-         */
+*/
         try {
             System.out.println("\ncriar individuos");
             Fachada.criarIndividuo("joao", "123");
@@ -35,9 +35,9 @@ public class Teste1 {
             System.out.println(e.getMessage());
         }
 
-        /**
+    /*    *
          * MENSAGEM
-         */
+*/
         try {
             System.out.println("\ncriar mensagens");
             Fachada.criarMensagem("joao", "maria", "oi maria tudo bem?");
@@ -71,9 +71,9 @@ public class Teste1 {
 
         System.out.println("\n*******************************************************");
 
-        /**
+     /*   *
          * GRUPO
-         */
+*/
 
         try {
             System.out.println("\ncriar grupos");
@@ -172,9 +172,10 @@ public class Teste1 {
         for (Grupo g : Fachada.listarGrupos())
             System.out.println(g);
 
-        /**
-         * ADMINISTRADOR
-         */
+     /*   ***
+          ADMINISTRADOR
+                  ****/
+
 
         System.out.println("\n*******************************************************");
         try {
@@ -182,7 +183,6 @@ public class Teste1 {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         try {
             System.out.println("ESPIONAR o termo 'projeto'");
             for (Mensagem m : Fachada.espionarMensagens("admin", "projeto"))

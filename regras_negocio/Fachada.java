@@ -37,7 +37,7 @@ public class Fachada {
 
     public static Individual validarIndividuo(String nomeindividuo,String senha) {
         //localiza individuo
-        Individual individuo = localizarIndividual(nomeindividuo);
+        Individual individuo = repositorio.localizarIndividual(nomeindividuo);
         if (individuo == null) {
             //retorna null se o indivíduo for nulo
             return null;
@@ -50,10 +50,6 @@ public class Fachada {
         }
     }
 
-    public static Individual localizarIndividual(String nomeindividuo) {
-        //retorna o individuo
-        return repositorio.localizarIndividual(nomeindividuo);
-    }
 
     public static void criarAdministrador(String nome,String senha) throws Exception {
         //verifica se texto nome ta vazio
@@ -158,7 +154,6 @@ public class Fachada {
         //verifica se destinatario existe
         if (destinatario == null)
             throw new Exception("criar mensagem - destinatario nao existe:" + nomedest);
-
         //cont.
         //gerar id no repositorio para a mensagem
         int id = repositorio.gerarID();
@@ -321,9 +316,6 @@ public class Fachada {
         //verificar se individuo é administrador
         if(!individuo.getAdministrador())
             throw new Exception("espionar mensagem - individuo não é administrador:" + nomeadmin);
-        //verificar se existe o termo nas mensagens
-        if(termo.isEmpty())
-            return repositorio.getMensagens();
         //listar as mensagens que contem o termo no texto
         ArrayList<Mensagem> lista = new ArrayList<>();
         //inicia um loop for que itera sobre cada mensagem obtida do repositorio de msgs

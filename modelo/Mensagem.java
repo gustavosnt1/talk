@@ -35,23 +35,13 @@ public class Mensagem {
         return emitente;
     }
 
-    public void setEmitente(Participante emitente) {
-        this.emitente = emitente;
-    }
-
     public Participante getDestinatario() {
         return destinatario;
-    }
-
-    public void setDestinatario(Participante destinatario) {
-        this.destinatario = destinatario;
     }
 
     public LocalDateTime getDatahora() {
         return datahora;
     }
-
-
 
     @Override
     public String toString() {

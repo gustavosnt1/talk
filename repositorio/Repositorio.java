@@ -34,7 +34,7 @@ public class Repositorio {
         if (mensagens.isEmpty()) {
             return 1;
         } else {
-            int maiorId = Integer.MIN_VALUE; //se nao tiver vazia a variavel maiorid guarda o valor minimo possivel para um inteiro
+            int maiorId = Integer.MIN_VALUE; //se nao tiver vazia a variavel maiorid guarda o valor minimo possivel
             for (Mensagem mensagem : mensagens) {
                 if (mensagem.getId() > maiorId) { //verifica se o id da mensagem atual e maior que o atual armazenado na variavel maiorid
                     maiorId = mensagem.getId(); //se o id da msg atual for maior q a variavel 'maiorid' ela e atualizada com valor da msg atual
