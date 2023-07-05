@@ -19,45 +19,48 @@ public class Repositorio {
     public Repositorio(){
         this.carregarObjetos();
     }
-
-
+    //adiciona participante
     public void adicionarParticipante(Participante part){
         participantes.put(part.getNome(), part);
     }
-
+    //remove participante/ sem uso
     public void removerParticipante(Participante part){
         participantes.remove(part.getNome());
     }
 
-
-
+    //gera id da mensagem
     public int gerarID() {
+        //verifica se mensagens esta vazia caso esteja vazia retorna 1 < primeiro id da msg
         if (mensagens.isEmpty()) {
             return 1;
         } else {
-            int maiorId = Integer.MIN_VALUE;
+            int maiorId = Integer.MIN_VALUE; //se nao tiver vazia a variavel maiorid guarda o valor minimo possivel para um inteiro
             for (Mensagem mensagem : mensagens) {
-                if (mensagem.getId() > maiorId) {
-                    maiorId = mensagem.getId();
+                if (mensagem.getId() > maiorId) { //verifica se o id da mensagem atual e maior que o atual armazenado na variavel maiorid
+                    maiorId = mensagem.getId(); //se o id da msg atual for maior q a variavel 'maiorid' ela e atualizada com valor da msg atual
                 }
             }
-            return maiorId + 1;
+            return maiorId + 1; //dps de percorrer todas msg o valor de maiorid aumenta 1, garante que o novo id seja maior que
+                                // todos ids das msgs existens
         }
     }
 
+    //adiciona msg
     public void adicionarMensagem(Mensagem msg) {
         mensagens.add(msg);
     }
 
-
+    //remove msg
     public void removerMensagem(Mensagem msg){
         mensagens.remove(msg);
     }
 
+    //localiza participante
     public Participante localizarParticipante(String nome) {
         return participantes.get(nome);
     }
 
+    //localizar individual
     public  Individual localizarIndividual(String nome) {
         for(Participante p : participantes.values()) {
             if(p instanceof Individual ind &&  p.getNome().equals(nome) ) {
@@ -67,7 +70,7 @@ public class Repositorio {
         return null;
     }
 
-
+    //localizar grupo
     public  Grupo localizarGrupo(String nome) {
         for(Participante p : participantes.values()) {
             if(p instanceof Grupo grp && p.getNome().equals(nome)) {
@@ -76,7 +79,6 @@ public class Repositorio {
         }
         return null;
     }
-
 
     public ArrayList<Grupo> getGrupos(){
         ArrayList<Grupo> grupos= new ArrayList<>();
@@ -88,7 +90,6 @@ public class Repositorio {
         return grupos;
     }
     public ArrayList<Individual> getIndividuos(){
-
         ArrayList<Individual> individuos= new ArrayList<>();
         for(Participante p : participantes.values()) {
             if (p instanceof Individual ind) {
