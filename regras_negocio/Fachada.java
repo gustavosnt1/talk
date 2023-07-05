@@ -105,14 +105,13 @@ public class Fachada {
         //verifica se grupo nao existe
         if(grp == null)
             throw new Exception("inserir Grupo - grupo não existe:" + nomegrupo);
-
         //verificar se individuo ja esta no grupo
-        //A expressão i -> i.getNome().equals(nomeindividuo) é uma expressão lambda que
-        // verifica se o nome de um indivíduo é igual ao nomeindividuo fornecido.
-        //se a expressão anyMatch() retornar true,
-        // isso significa que um indivíduo com o mesmo nome já existe no grupo
-        if (grp.getIndividuos().stream().anyMatch(i -> i.getNome().equals(nomeindividuo))) {
-            throw new Exception("inserir - indivíduo já está no grupo" + nomeindividuo);
+        ArrayList<Individual> individuos = grp.getIndividuos();
+        for (int i = 0; i < individuos.size(); i++) {
+            Individual individuo = individuos.get(i);
+            if (individuo.getNome().equals(nomeindividuo)) {
+                throw new Exception("inserir - indivíduo já está no grupo: " + nomeindividuo);
+            }
         }
         //adicionar individuo com o grupo e vice-versa
         grp.adicionarIndividual(ind);
@@ -171,7 +170,7 @@ public class Fachada {
         //adicionar mensagem ao repositorio
         repositorio.adicionarMensagem(msg);
         //Se o destinatário for um grupo, envia cópias da mensagem (com mesmo id) do grupo para os membros desse grupo
-        //(exceto para emitente que criou a mensagem original), concatenando ao texto o nome do emitente, na forma “nome/texto”.
+        //(exceto para emitente que criou a mensagem original), concatenando ao texto o nome    do emitente, na forma “nome/texto”.
         if (destinatario instanceof Grupo) {
             //realiza um castingpara atribuir o objeto destinatario a variável grp como uma instância da
             // classe Grupo. isso permite acessar os metodos e propriedades específicos da classe Grupo.
@@ -199,14 +198,14 @@ public class Fachada {
 
 
 
-    public static ArrayList<Mensagem> obterConversa(String nomeemitente, String nomedestinatario) throws Exception{
-        //localizar emitente no repositorio
-        Individual emitente = repositorio.localizarIndividual(nomeemitente);
-        //verifica se emitente existe
-        if(emitente == null)
-            throw new Exception("obter conversa - emitente nao existe:" + nomeemitente);
-        //localizar destinatario no repositorio
-        Participante destinatario = repositorio.localizarParticipante(nomedestinatario);
+        public static ArrayList<Mensagem> obterConversa(String nomeemitente, String nomedestinatario) throws Exception{
+            //localizar emitente no repositorio
+            Individual emitente = repositorio.localizarIndividual(nomeemitente);
+            //verifica se emitente existe
+            if(emitente == null)
+                throw new Exception("obter conversa - emitente nao existe:" + nomeemitente);
+            //localizar destinatario no repositorio
+            Participante destinatario = repositorio.localizarParticipante(nomedestinatario);
         //verifica se destinatario existe
         if(destinatario == null)
             throw new Exception("obter conversa - destinatario nao existe:" + nomedestinatario);
@@ -340,6 +339,8 @@ public class Fachada {
     public static ArrayList<String> ausentes(String nomeadmin) throws Exception {
         //localizar individuo no repositorio
         Individual individuo = repositorio.localizarIndividual(nomeadmin);
+        if(nomeadmin == null)
+            throw new Exception("nome adm nao existe" + nomeadmin);
         //verificar se individuo é administrador
         if(!individuo.getAdministrador())
             throw new Exception("ausentes - individuo não é administrador:" + nomeadmin);
