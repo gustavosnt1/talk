@@ -1,5 +1,4 @@
 Projeto 4Talk para disciplina de POO
 
-Projeto com estudo sobre desenvolvimento em camadas, relacionamento uni/bidirecional, mapa de objetos, herança, polimorfismo e etc.
-
+rojeto referente à disciplina de P.O.O (Programação Orientada a Objetos), consiste em um sistema de troca de mensagens. fazendo uso da linguagem Java focando na utilização e fixação dos conceitos de POO.
 
