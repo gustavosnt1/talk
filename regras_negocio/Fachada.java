@@ -77,14 +77,14 @@ public class Fachada {
         //verifica se texto vazio
         if(nome.isEmpty())
             throw new Exception("criar grupo - nome vazio:");
-        //localizar nome no repositorio
-        Participante p = repositorio.localizarParticipante(nome);
+        //localizar nome do grupo no repositorio
+        Grupo grp = repositorio.localizarGrupo(nome);
         //verifica se grupo ja existe
-        if(p != null)
+        if(grp != null)
             throw new Exception("criar grupo - nome ja existe:" + nome);
         //criar o grupo
-        Grupo grp = new Grupo(nome);
-        repositorio.adicionarParticipante(grp);
+        Grupo grupo = new Grupo(nome);
+        repositorio.adicionarParticipante(grupo);
         repositorio.salvarObjetos();
     }
 
@@ -102,10 +102,10 @@ public class Fachada {
         if(grp == null)
             throw new Exception("inserir Grupo - grupo não existe:" + nomegrupo);
         //verificar se individuo ja esta no grupo
-        ArrayList<Individual> individuos = grp.getIndividuos();
-        for (int i = 0; i < individuos.size(); i++) {
-            Individual individuo = individuos.get(i);
-            if (individuo.getNome().equals(nomeindividuo)) {
+        ArrayList<Individual> individuos = grp.getIndividuos(); //Arraylist contendo individuos associados aos grupos
+        for (int i = 0; i < individuos.size(); i++) { //pecorre elementos individuos o contador i inicia com 0 enquatnto o i for menor que a lista
+            Individual individuo = individuos.get(i); // cada interacao da loop  um individuo e obtido pelo metodo individuos.get
+            if (individuo.getNome().equals(nomeindividuo)) { //se o nome do  individuo e igual o parametro nomeindividuo da a exception
                 throw new Exception("inserir - indivíduo já está no grupo: " + nomeindividuo);
             }
         }

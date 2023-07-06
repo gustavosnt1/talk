@@ -97,7 +97,7 @@ public class TelaLogin {
 						frame.dispose();
 					}
 					else
-						label.setText("individuo nao encontrado: ");
+						label.setText("individuo nao encontrado ou senhaerrada:");
 
 				}
 				catch(Exception ex) {

@@ -30,7 +30,6 @@ public class Mensagem {
         return texto;
     }
 
-
     public Participante getEmitente() {
         return emitente;
     }
